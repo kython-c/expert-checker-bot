@@ -60,7 +60,7 @@ hearManager.hear('кеш', async (context) => { // При необходимос
 	return context.send({ sticker_id: Number(process.env.STICKER_ID) });
 });
 
-hearManager.hear(/^(?:чек)\s?([0-9]+|[id{\d}|@([A-Za-z]+(?:\.\w+)*])?$/i, async (context) => {
+hearManager.hear(/^(?:[!/]?чек)\s?([0-9]+|[id{\d}|@([A-Za-z_]+(?:\.\w+)*])?$/i, async (context) => {
 	let user;
 	let userId;
 	let screen_name;
