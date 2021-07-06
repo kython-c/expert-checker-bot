@@ -19,19 +19,20 @@ client.on('error', (error) => {
 });
 
 const DB_PATH = path.join(__dirname, '..', 'db.json');
+console.log(DB_PATH)
 
 const createCache = async () => {
   try {
     fs.readJSON(DB_PATH, (err, db) => {
       if (err) console.error(err);
-      
+
       try {
-        const flash = await client.flushdb()
-        console.log(flash)
+        const flash = client.flushdb();
+        console.log(flash);
       } catch (err) {
         console.error(`An error flashing:\n\n ${err}`);
       }
-      
+
       for (const user of Object.values(db)) {
         // Не самый эффективный способ, но уже лучше, чем могло бы быть
         client.set(String(user.user_id), JSON.stringify({
