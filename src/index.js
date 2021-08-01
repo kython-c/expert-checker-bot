@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-require('dotenv').config({ path: './config.env' });
+require('dotenv').config({ path: '../config.env' });
 const { VK } = require('vk-io');
 const { HearManager } = require('@vk-io/hear');
 const fs = require('fs-extra');
@@ -20,15 +20,15 @@ const vk = new VK({
 
 fetchChart(vk); // Создание базы данных при первом запуске
 
-setInterval(async () => { // Таймер обновления базы данных (дефолт раз в 24 часа)
-	fetchChart(vk);
+ setInterval(async () => { // Таймер обновления базы данных (дефолт раз в 24 часа)
+ 	fetchChart(vk);
 
-	return vk.api.call('messages.send', { // Уведомляем об успешном кешировании
-		peer_ids: process.env.ADMIN_ID,
-		message: 'Кеширование успешно завершено!',
-		random_id: 0
-	});
-}, 86400000);
+ 	return vk.api.call('messages.send', { // Уведомляем об успешном кешировании
+ 		peer_ids: process.env.ADMIN_ID,
+ 		message: 'Кеширование успешно завершено!',
+ 		random_id: 0
+ 	});
+ }, 86400000);
 
 const hearManager = new HearManager();
 
@@ -144,6 +144,11 @@ hearManager.hear(/^(?:[!/]?чек)\s?([0-9]+|[id{\d}|@([A-Za-z_]+(?:\.\w+)*])?$/
 	});
 
 	return 0;
+});
+
+hearManager.hear('test', async (context) => { // При необходимости можем обновлять нашу базу данных в любой момент. Не рекомендую делать это слишком часто, так как капча.
+
+	return context.send({ sticker_id: Number(process.env.STICKER_ID) });
 });
 
 vk.updates.start().catch(console.error);
