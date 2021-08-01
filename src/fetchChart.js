@@ -38,7 +38,7 @@ const fetchChart = async (vk) => {
     });
   }
 
-  fs.outputFile('db.json', JSON.stringify(parsedChart.response.chart, null, 4), (err) => { // Воруем весь топ кекспертов себе в джсон файлик
+  fs.outputFile('../db.json', JSON.stringify(parsedChart.response.chart, null, 4), (err) => { // Воруем весь топ кекспертов себе в джсон файлик
     if (err) console.error(err);
     createCache();
     return true;
